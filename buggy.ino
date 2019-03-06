@@ -67,18 +67,18 @@ digitalWrite(in2, LOW);
 analogWrite(enA, 0);
 digitalWrite(in3, LOW);
 digitalWrite(in4, HIGH);
-analogWrite(enB, 100);
+analogWrite(enB, 70);
 }
 void RIGHT(){//motor A
 digitalWrite(in1, HIGH);
 digitalWrite(in2, LOW);
-analogWrite(enA, 100);
+analogWrite(enA, 70);
 digitalWrite(in3, LOW);
 digitalWrite(in4, HIGH);
 analogWrite(enB, 0); 
 }
 void Turnright(){//motor B
-  while (count <20) {
+  while (count <30) {
     LEFT();
     lastState = detectState;
     detectState=digitalRead(encoderInR);
@@ -87,9 +87,10 @@ void Turnright(){//motor B
       Serial.println(count);
   }
 }
+count = 0;
 }
 void Turnleft(){//motor A
-  while (count <20) {
+  while (count <30) {
     RIGHT();
     lastState = detectState;
     detectState=digitalRead(encoderInL);
@@ -98,28 +99,28 @@ void Turnleft(){//motor A
       Serial.println(count);
   }
 }
+count = 0;
 }
 
 void loop() {
   name_servo.write(10);
-  UltraSS();
+  UltraSS1();
 
-if(distance < 50){
-Stop();
-delay(1000);
-turn = rand()%2;
-Serial.print (turn);
-  if (turn ==0){
-    Turnleft();
+if(distance < 40){
+    Stop();
+    delay(1000);
+    turn = rand()%2;
+    Serial.print (turn);
+      if (turn ==0){
+        Turnleft();
+        }
+      else {
+        Turnright();
+      }
+   Stop();
+   delay(1000);
     }
-  else {
-    Turnright();
-  }
-delay(500)
-count=0;
-}
 else {
-RunF();
-
+  RunF();
 }
 }
