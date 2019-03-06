@@ -6,10 +6,25 @@ Servo name_servo;
 const int encoderInL = 2, encoderInR =3;
 int detectState=0, count=0, lastState;
 int servo_position = 0;
-int trigPin= 7;
-int echoPin= 8;
-long duration;
-int distance;
+//US1
+int trigPin1= 7;
+int echoPin1= 8;
+long duration1;
+int distance1;
+
+//US2-left
+int trigPin2= 1;
+int echoPin2= 0
+long duration2;
+int distance2;
+
+//US3-right
+int trigPin3= 1;
+int echoPin3= 0
+long duration3;
+int distance3;
+
+
 int enA = 5;
 int in1 = 9;
 int in2 = 10;
@@ -25,23 +40,47 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  pinMode(trigPin, OUTPUT); 
-  pinMode(echoPin, INPUT);
+  pinMode(trigPin1, OUTPUT); 
+  pinMode(echoPin1, INPUT);
   Serial.begin(9600);// initialize serial communication of UltraSS
   pinMode(encoderInL, INPUT);
   pinMode(encoderInR, INPUT);
 }
 
 
-void UltraSS() {
-digitalWrite(trigPin, LOW);// short high pulse to ensure clean high pulse
+void UltraSS1() {
+digitalWrite(trigPin1, LOW);// short high pulse to ensure clean high pulse
 delay(2);
-digitalWrite(trigPin, HIGH);// pulse is sent
+digitalWrite(trigPin1, HIGH);// pulse is sent
 delay(10);
-digitalWrite(trigPin, LOW);
-duration = pulseIn(echoPin, HIGH);
-distance= duration*0.034/2;
+digitalWrite(trigPin1, LOW);
+duration1 = pulseIn(echoPin1, HIGH);
+distance1= duration1*0.034/2;
 }
+
+void UltraSS2() {//LEFT USS
+digitalWrite(trigPin2, LOW);// short high pulse to ensure clean high pulse
+delay(2);
+digitalWrite(trigPin2, HIGH);// pulse is sent
+delay(10);
+digitalWrite(trigPin2, LOW);
+duration2 = pulseIn(echoPin1, HIGH);
+distance2= duration2*0.034/2;
+}
+
+void UltraSS3() {//RIGHT USS
+digitalWrite(trigPin3, LOW);// short high pulse to ensure clean high pulse
+delay(2);
+digitalWrite(trigPin3, HIGH);// pulse is sent
+delay(10);
+digitalWrite(trigPin3, LOW);
+duration3 = pulseIn(echoPin, HIGH);
+distance3= duration3*0.034/2;
+}
+
+
+
+
 void RunF(){
 digitalWrite(in1, HIGH);//motor A at power 400, so moving
 digitalWrite(in2, LOW);
@@ -49,9 +88,12 @@ analogWrite(enA, 100);
 digitalWrite(in3, LOW);//motor B
 digitalWrite(in4, HIGH);
 analogWrite(enB,100);
-
- 
 }
+
+
+
+
+
 
 void Stop(){
 digitalWrite(in1, HIGH);//motor B at power 0,so stop
